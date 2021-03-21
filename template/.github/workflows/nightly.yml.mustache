@@ -1,3 +1,4 @@
+{{#ci}}
 name: Swift nightly build
 
 on:
@@ -11,11 +12,28 @@ jobs:
     strategy:
       matrix:
         image: ['nightly-5.4-bionic', 'nightly-5.4-focal', 'nightly-5.4-centos8', 'nightly-5.4-amazonlinux2']
+    {{{ci.services}}}
     container:
+      {{=<< >>=}}
       image: swiftlang/swift:${{ matrix.image }}
+      <<={{ }}=>>
+      {{#env}}
+      env:
+      {{#entries}}
+        {{{.}}}
+      {{/entries}}
+      {{/env}}
     steps:
     - name: Checkout
       uses: actions/checkout@v2
+{{#enable_tests}}
     - name: Test
       run: |
-        swift test --enable-test-discovery  --enable-code-coverage --sanitize=thread
+        swift test --enable-test-discovery --sanitize=thread
+{{/enable_tests}}
+{{^enable_tests}}
+    - name: Build
+      run: |
+        swift build
+{{/enable_tests}}
+{{/ci}}

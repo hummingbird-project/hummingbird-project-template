@@ -1,3 +1,4 @@
+{{#ci}}
 name: CI
 
 on:
@@ -19,21 +20,38 @@ jobs:
     strategy:
       matrix:
         image: ['swift:5.3-bionic', 'swift:5.3-focal', 'swift:5.3-amazonlinux2', 'swift:5.3-centos8']
+    {{{ci.services}}}
     container:
+      {{=<< >>=}}
       image: ${{ matrix.image }}
+      <<={{ }}=>>
+      {{#env}}
+      env:
+      {{#entries}}
+        {{{.}}}
+      {{/entries}}
+      {{/env}}
     steps:
     - name: Checkout
       uses: actions/checkout@v2
+{{#enable_tests}}
     - name: Test
       run: |
-        swift test --enable-test-discovery  --enable-code-coverage --sanitize=thread
+        swift test --enable-test-discovery --enable-code-coverage --sanitize=thread
     - name: Convert coverage files
       run: |
         llvm-cov export -format="lcov" \
-          .build/debug/${HBPROJECT}PackageTests.xctest \
+          .build/debug/{{project}}PackageTests.xctest \
           -ignore-filename-regex="\/Tests\/" \
           -instr-profile .build/debug/codecov/default.profdata > info.lcov
     - name: Upload to codecov.io
       uses: codecov/codecov-action@v1
       with:
         file: info.lcov
+{{/enable_tests}}
+{{^enable_tests}}
+- name: Build
+  run: |
+    swift build
+{{/enable_tests}}
+{{/ci}}

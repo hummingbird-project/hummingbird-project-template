@@ -2,6 +2,20 @@
 
 set -eu
 
+function run_mustache {
+    SRC=$1
+    DEST=$2
+    PROJECT=$3
+
+    if [[ -f "../$PROJECT.yml" ]]; then
+        CONTEXT="../$PROJECT.yml"
+    else
+        CONTEXT="../default.yml"
+    fi
+    echo "Loading $CONTEXT"
+    echo "project: $PROJECT" | cat - $CONTEXT | mustache - "$SRC" > "$DEST"
+}
+
 function update_project {
     export HBPROJECT=$1
 
@@ -14,6 +28,8 @@ function update_project {
             EXTENSION="${f##*.}"
             if [[ "$EXTENSION" == "sh" ]]; then
                 cp "$f" ../../$HBPROJECT/"$f"
+            elif [[ "$EXTENSION" == "mustache" ]]; then
+                run_mustache "$f" ../../$HBPROJECT/"${f%.*}" "$HBPROJECT"
             else
                 cat "$f" | envsubst > ../../$HBPROJECT/"$f"
             fi
@@ -26,7 +42,7 @@ function update_project {
     popd > /dev/null
 }
 
-PROJECT=$1
+PROJECT=${1-}
 
 if [[ -z "$PROJECT" ]]; then
 
