@@ -12,7 +12,6 @@ function run_mustache {
     else
         CONTEXT="../default.yml"
     fi
-    echo "Loading $CONTEXT"
     echo "project: $PROJECT" | cat - $CONTEXT | mustache - "$SRC" > "$DEST"
 }
 
