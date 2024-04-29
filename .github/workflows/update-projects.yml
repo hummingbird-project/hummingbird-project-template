@@ -39,10 +39,9 @@ jobs:
       run: |
         cd project-template
         ./update.sh ${{ matrix.repo }}
-        cd ../${{ matrix.repo }}
-        git checkout -b project-template-update
-        git add .
-        git commit -m "Update from hummingbird-project-template ${{ github.ref }}"
+        #git checkout -b project-template-update
+        #git add .
+        #git commit -m "Update from hummingbird-project-template ${{ github.ref }}"
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v6
       with:
