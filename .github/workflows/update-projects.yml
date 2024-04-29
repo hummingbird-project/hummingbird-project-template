@@ -13,6 +13,11 @@ jobs:
         matrix:
           repo:
             - hummingbird
+            - hummingbird-auth
+            - hummingbird-fluent
+            - hummingbird-postgres
+            - hummingbird-redis
+            - hummingbird-websocket
     steps:
     - name: App Token
       uses: tibdex/github-app-token@v1
