@@ -32,7 +32,7 @@ jobs:
         ref: main
         fetch-depth: 1
         path: ${{ matrix.repo }}
-        repository: https://github.com/hummingbird-project/${{ matrix.repo }}
+        repository: hummingbird-project/${{ matrix.repo }}
     - name: Install Dependencies
       run: |
         gem install mustache
