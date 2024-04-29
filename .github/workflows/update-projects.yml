@@ -1,0 +1,53 @@
+name: Update Hummingbird Packages
+
+on:
+  push:
+    branches:
+      main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macOS-latest
+    strategy:
+        matrix:
+          repo:
+            - hummingbird
+    steps:
+    - name: App Token
+      uses: tibdex/github-app-token@v1
+      id: generate-token
+      with:
+        app_id: ${{ secrets.HB_APP_ID }}
+        private_key: ${{ secrets.HB_APP_PRIVATE_KEY }}
+    - name: Checkout Project Template
+      uses: actions/checkout@v4
+      with:
+        ref: main
+        fetch-depth: 1
+        path: project-template
+    - name: Checkout Target Repository
+      uses: actions/checkout@v4
+      with:
+        ref: main
+        fetch-depth: 1
+        path: ${{ matrix.repo }}
+        repository: https://github.com/hummingbird-project/${{ matrix.repo }}
+    - name: Install Dependencies
+      run: |
+        gem install mustache
+    - name: Update Target Repository
+      run: |
+        cd project-template
+        ./update.sh ${{ matrix.repo }}
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v6
+      with:
+        token: ${{ steps.generate-token.outputs.token }}
+        commit-message: 'Update from hummingbird-project-template'
+        committer: GitHub <noreply@github.com>
+        author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+        branch: project-template-update
+        title: 'Update from Hummingbird Project Template'
+        body: 'Automated update of files from https://github.com/hummingbird-project/hummingbird-project-template'
+        base: main
