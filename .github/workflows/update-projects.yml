@@ -44,7 +44,7 @@ jobs:
       with:
         token: ${{ steps.generate-token.outputs.token }}
         path: ${{ matrix.repo }}
-        commit-message: 'Update from hummingbird-project-template ${{ github.ref }}'
+        commit-message: 'Update from hummingbird-project-template ${{ github.sha }}'
         committer: GitHub <noreply@github.com>
         author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
         branch: project-template-update
