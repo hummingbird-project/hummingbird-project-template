@@ -64,7 +64,7 @@ jobs:
 {{#enable_tests}}
     - name: Test
       run: |
-        swift test --enable-code-coverage
+        swift test --enable-code-coverage --sanitize=thread
     - name: Convert coverage files
       run: |
         llvm-cov export -format="lcov" \
