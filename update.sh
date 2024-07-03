@@ -18,9 +18,10 @@ function run_mustache {
 }
 
 function update_project {
-    export HBPROJECT=$1
+    export PROJECT_PATH=$1
+    export PROJECT_NAME=$(basename $1)
 
-    echo "Updating $HBPROJECT"
+    echo "Updating $PROJECT_NAME"
 
     pushd template > /dev/null
     for f in $(find . -print)
@@ -28,16 +29,16 @@ function update_project {
         if [[ -f "$f" ]]; then
             EXTENSION="${f##*.}"
             if [[ "$EXTENSION" == "sh" ]]; then
-                cp "$f" "$HBPROJECT"/"$f"
+                cp "$f" "$PROJECT_PATH"/"$f"
             elif [[ "$EXTENSION" == "mustache" ]]; then
-                run_mustache "$f" "$HBPROJECT"/"${f%.*}" "$HBPROJECT"
+                run_mustache "$f" "$PROJECT_PATH"/"${f%.*}" "$PROJECT_NAME"
             else
-                cp "$f" "$HBPROJECT"/"$f"
+                cp "$f" "$PROJECT_PATH"/"$f"
                 #cat "$f" | envsubst > ../../$HBPROJECT/"$f"
             fi
         elif [[ -d "$f" ]]; then
-            if [[ ! -d "$HBPROJECT"/"$f" ]]; then
-                mkdir "$HBPROJECT"/"$f"
+            if [[ ! -d "$PROJECT_PATH"/"$f" ]]; then
+                mkdir "$PROJECT_PATH"/"$f"
             fi
         fi
     done
