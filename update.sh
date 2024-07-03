@@ -28,37 +28,26 @@ function update_project {
         if [[ -f "$f" ]]; then
             EXTENSION="${f##*.}"
             if [[ "$EXTENSION" == "sh" ]]; then
-                cp "$f" ../../$HBPROJECT/"$f"
+                cp "$f" "$HBPROJECT"/"$f"
             elif [[ "$EXTENSION" == "mustache" ]]; then
-                run_mustache "$f" ../../$HBPROJECT/"${f%.*}" "$HBPROJECT"
+                run_mustache "$f" "$HBPROJECT"/"${f%.*}" "$HBPROJECT"
             else
-                cp "$f" ../../$HBPROJECT/"$f"
+                cp "$f" "$HBPROJECT"/"$f"
                 #cat "$f" | envsubst > ../../$HBPROJECT/"$f"
             fi
         elif [[ -d "$f" ]]; then
-            if [[ ! -d ../../$HBPROJECT/"$f" ]]; then
-                mkdir ../../$HBPROJECT/"$f"
+            if [[ ! -d "$HBPROJECT"/"$f" ]]; then
+                mkdir "$HBPROJECT"/"$f"
             fi
         fi
     done
     popd > /dev/null
 }
 
-PROJECT=${1-}
-
-if [[ -z "$PROJECT" ]]; then
-
-    update_project hummingbird
-    update_project hummingbird-auth
-    update_project hummingbird-compression
-    update_project hummingbird-fluent
-    update_project hummingbird-jobs
-    update_project hummingbird-lambda
-    update_project swift-mustache
-    update_project hummingbird-postgres
-    update_project hummingbird-redis
-    update_project hummingbird-websocket
-
+PROJECT_PATH=${1-}
+if [[ -z "$PROJECT_PATH" ]]; then
+    echo "Usage: update.sh <path to project>"
 else
-    update_project "$PROJECT"
+    FULL_PROJECT_PATH=$(cd "$(dirname "$PROJECT_PATH")"; pwd -P)/$(basename "$PROJECT_PATH")
+    update_project "$FULL_PROJECT_PATH"
 fi
