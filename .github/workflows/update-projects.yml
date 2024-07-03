@@ -16,13 +16,13 @@ jobs:
             - hummingbird-auth
             - hummingbird-compression
             - hummingbird-fluent
-            - hummingbird-jobs
+            - swift-jobs
             - swift-mustache
             - hummingbird-redis
             - hummingbird-websocket
     steps:
     - name: App Token
-      uses: tibdex/github-app-token@v1
+      uses: tibdex/github-app-token@v2
       id: generate-token
       with:
         app_id: ${{ secrets.HB_APP_ID }}
@@ -45,7 +45,7 @@ jobs:
     - name: Update Target Repository
       run: |
         cd project-template
-        ./update.sh ${{ matrix.repo }}
+        ./update.sh ../${{ matrix.repo }}
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v6
       with:
