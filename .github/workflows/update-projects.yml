@@ -16,10 +16,11 @@ jobs:
             - hummingbird-auth
             - hummingbird-compression
             - hummingbird-fluent
-            - swift-jobs
-            - swift-mustache
             - hummingbird-redis
             - hummingbird-websocket
+            - swift-jobs
+            - swift-jobs-redis
+            - swift-mustache
     steps:
     - name: App Token
       uses: tibdex/github-app-token@v2

@@ -4,3 +4,4 @@ ci:
   linux:
     images: ['swift:5.9', 'swift:5.10', 'swiftlang/swift:nightly-6.0-jammy']
   mac: false
+swiftformat-version: 0.53.10
