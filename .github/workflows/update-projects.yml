@@ -42,7 +42,8 @@ jobs:
         repository: hummingbird-project/${{ matrix.repo }}
     - name: Install Dependencies
       run: |
-        gem install mustache
+        brew install mint
+        mint install hummingbird-project/swift-mustache-cli
     - name: Update Target Repository
       run: |
         cd project-template
