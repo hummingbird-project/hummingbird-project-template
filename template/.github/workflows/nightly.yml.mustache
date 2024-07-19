@@ -9,23 +9,6 @@ on:
   workflow_dispatch:
 
 jobs:
-{{#mac}}
-  macOS:
-    runs-on: macOS-latest
-    timeout-minutes: 15
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-{{#enable_tests}}
-    - name: SPM tests
-      run: swift test
-{{/enable_tests}}
-{{^enable_tests}}
-    - name: Build
-      run: |
-        swift build
-{{/enable_tests}}
-{{/mac}}
 {{#linux}}
   linux:
     runs-on: ubuntu-latest
