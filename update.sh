@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Install mustache with `gem install mustache`
+# Install mustache with `brew install mint` and `mint install hummingbird-project/swift-mustache-cli`
 
 set -eu
 
