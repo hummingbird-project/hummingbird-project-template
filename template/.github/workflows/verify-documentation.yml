@@ -3,7 +3,7 @@ name: Verify Documentation
 on:
   pull_request:
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}-apibreakage
+  group: ${{ github.workflow }}-${{ github.ref }}-verifydocs
   cancel-in-progress: true
   
 jobs:
@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     container:
-      image: swift:5.10
+      image: swift:latest
     steps:
     - name: Checkout
       uses: actions/checkout@v4
