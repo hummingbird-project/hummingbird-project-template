@@ -14,7 +14,14 @@ function run_mustache {
     else
         CONTEXT="../default.yml"
     fi
-    echo "project: $PROJECT" | cat - $CONTEXT | mustache - "$SRC" > "$DEST"
+    TEMP_FILE=$(mktemp)
+    echo "project: $PROJECT" | cat - $CONTEXT | mustache - "$SRC" > "$TEMP_FILE"
+    # delete file if it is empty or only contains spaces
+    if ! grep -q '[^[:space:]]' "$TEMP_FILE" ; then
+        rm "$TEMP_FILE"
+    else
+        mv "$TEMP_FILE" "$DEST"
+    fi
 }
 
 function update_project {

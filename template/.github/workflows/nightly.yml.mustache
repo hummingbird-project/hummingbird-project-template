@@ -8,6 +8,13 @@ on:
 {{/nightly}}
   workflow_dispatch:
 
+{{#count(env)}}
+env:
+{{#enumerated(env)}}
+  {{{key}}}: {{{value}}}
+{{/enumerated(env)}}
+{{/count(env)}}
+
 jobs:
 {{#linux}}
   linux:
@@ -16,17 +23,22 @@ jobs:
     strategy:
       matrix:
         image: ['nightly-focal', 'nightly-jammy', 'nightly-amazonlinux2']
+        {{#enumerated(matrix)}}
+        {{{key}}}: {{{value}}}
+        {{/enumerated(matrix)}}
+        {{{matrix-include}}}
     {{{services}}}
     container:
       {{=<< >>=}}
       image: swiftlang/swift:${{ matrix.image }}
       <<={{ }}=>>
-      {{#env}}
-      env:
-      {{#entries}}
-        {{{.}}}
-      {{/entries}}
-      {{/env}}
+      {{#volumes}}volumes: {{{.}}}{{/volumes}}
+    {{#count(additional-env)}}
+    env:
+    {{#enumerated(additional-env)}}
+      {{{key}}}: {{{value}}}
+    {{/enumerated(additional-env)}}
+    {{/count(additional-env)}}
     steps:
     - name: Checkout
       uses: actions/checkout@v4
