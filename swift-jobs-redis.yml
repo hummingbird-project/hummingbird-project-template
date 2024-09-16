@@ -16,3 +16,5 @@ ci:
   mac: false
 swift-version: 5.9
 swiftformat-version: 0.53.10
+extra-codeowners:
+  - thoven87
