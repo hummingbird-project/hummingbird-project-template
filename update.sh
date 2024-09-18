@@ -21,12 +21,15 @@ function run_mustache {
         rm "$TEMP_FILE"
     else
         mv "$TEMP_FILE" "$DEST"
+        if [[ "$DEST" == *.sh ]]; then
+            chmod a+x "$DEST"
+        fi
     fi
 }
 
 function update_project {
-    export PROJECT_PATH=$1
-    export PROJECT_NAME=$(basename $1)
+    PROJECT_PATH=$1
+    PROJECT_NAME=$(basename "$1")
 
     echo "Updating $PROJECT_NAME"
 
@@ -41,7 +44,6 @@ function update_project {
                 run_mustache "$f" "$PROJECT_PATH"/"${f%.*}" "$PROJECT_NAME"
             else
                 cp "$f" "$PROJECT_PATH"/"$f"
-                #cat "$f" | envsubst > ../../$HBPROJECT/"$f"
             fi
         elif [[ -d "$f" ]]; then
             if [[ ! -d "$PROJECT_PATH"/"$f" ]]; then
