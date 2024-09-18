@@ -11,7 +11,11 @@ function run_mustache {
     TEMPLATE_CONTEXT=$4
 
     TEMP_FILE=$(mktemp)
-    echo "project: $PROJECT" | cat - "$TEMPLATE_CONTEXT" | mustache - "$SRC" > "$TEMP_FILE"
+    if [[ -n "$TEMPLATE_CONTEXT" ]]; then
+        echo "project: $PROJECT" | cat - "$TEMPLATE_CONTEXT" | mustache ../default.yml,- "$SRC" > "$TEMP_FILE"
+    else
+        echo "project: $PROJECT" | cat - ../default.yml | mustache - "$SRC" > "$TEMP_FILE"
+    fi
     # delete file if it is empty or only contains spaces
     if ! grep -q '[^[:space:]]' "$TEMP_FILE" ; then
         rm "$TEMP_FILE"
