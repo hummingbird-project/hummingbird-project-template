@@ -2,7 +2,7 @@ ci:
   nightly: false
   enable_tests: true
   linux:
-    images: ['swift:5.8', 'swift:5.9', 'swift:5.10', 'swiftlang/swift:nightly-6.0-jammy']
+    images: ['swift:5.8', 'swift:5.9', 'swift:5.10', 'swift:6.0']
   mac: true
 swift-version: 5.8
 swiftformat-version: 0.53.10
