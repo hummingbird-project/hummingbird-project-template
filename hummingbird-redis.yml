@@ -1,4 +1,6 @@
 ci:
+  env:
+    REDIS_HOSTNAME: "redis"
   nightly: false
   linux:
     images: ['swift:5.9', 'swift:5.10', 'swift:6.0']
@@ -10,9 +12,6 @@ ci:
               ports:
                 - 6379:6379
               options: --entrypoint redis-server
-    env:
-      entries: |
-        REDIS_HOSTNAME: "redis"
   mac: false
 swift-version: 5.9
 swiftformat-version: 0.53.10
