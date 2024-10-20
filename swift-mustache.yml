@@ -1,2 +1,4 @@
 ci:
   mac: true
+  windows:
+    swift-versions: ['6.0']

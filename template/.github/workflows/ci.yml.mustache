@@ -92,4 +92,25 @@ jobs:
         swift build
 {{/enable_tests}}
 {{/linux}}
+{{#windows}}
+  windows:
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        swift-version: {{{swift-versions}}}
+    steps:
+      - uses: compnerd/gha-setup-swift@main
+        with:
+{{=<< >>=}}
+          branch: swift-${{ matrix.swift-version }}-release
+          tag: ${{ matrix.swift-version }}-RELEASE
+<<={{ }}=>>
+      - uses: actions/checkout@v4
+{{#enable_tests}}
+      - run: swift test
+{{/enable_tests}}      
+{{^enable_tests}}
+      - run: swift build
+{{/enable_tests}}      
+{{/windows}}
 {{/ci}}
