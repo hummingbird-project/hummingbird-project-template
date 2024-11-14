@@ -25,15 +25,23 @@ jobs:
         {{#enumerated(matrix)}}
         {{{key}}}: {{{value}}}
         {{/enumerated(matrix)}}
-        {{{matrix-include}}}
-    {{{services}}}
+        {{#matrix-include}}
+        {{{.}}}
+        {{/matrix-include}}
     container:
       {{=<< >>=}}
       image: swiftlang/swift:${{ matrix.image }}
       <<={{ }}=>>
+{{#services}}
+    services:
+      {{{.}}}
+{{/services}}
     steps:
     - name: Checkout
       uses: actions/checkout@v4
+{{#additional_steps}}
+    {{{.}}}
+{{/additional_steps}}
 {{#enable_tests}}
     - name: Test
       run: |

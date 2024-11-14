@@ -61,15 +61,23 @@ jobs:
         {{#enumerated(matrix)}}
         {{{key}}}: {{{value}}}
         {{/enumerated(matrix)}}
-        {{{matrix-include}}}
-    {{{services}}}
+        {{#matrix-include}}
+        {{{.}}}
+        {{/matrix-include}}
     container:
       {{=<< >>=}}
       image: ${{ matrix.image }}
       <<={{ }}=>>
+{{#services}}
+    services:
+      {{{.}}}
+{{/services}}
     steps:
     - name: Checkout
       uses: actions/checkout@v4
+{{#additional_steps}}
+    {{{.}}}
+{{/additional_steps}}
 {{#enable_tests}}
     - name: Test
       run: |
@@ -82,7 +90,7 @@ jobs:
           -ignore-filename-regex="\/Benchmarks\/" \
           -instr-profile .build/debug/codecov/default.profdata > info.lcov
     - name: Upload to codecov.io
-      uses: codecov/codecov-action@v4
+      uses: codecov/codecov-action@v5
       with:
         file: info.lcov
 {{/enable_tests}}

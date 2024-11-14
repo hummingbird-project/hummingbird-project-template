@@ -15,7 +15,7 @@ ci:
     # You can also add a services section here to add 
   # Enable Mac CI
   mac: false
-# Base swift version to run swift formt off  
+# Base swift version to run swift format off  
 swift-version: 5.9
 # Swift format version
 swiftformat-version: 0.53.10
