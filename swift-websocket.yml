@@ -18,4 +18,4 @@ ci:
             # container to see volumes populated from the checked out workspace.
             uses: docker://docker
             with:
-              args: docker restart fuzzyingserver
+              args: docker restart fuzzingserver
