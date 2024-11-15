@@ -16,6 +16,7 @@ jobs:
             - hummingbird-auth
             - hummingbird-compression
             - hummingbird-fluent
+            - hummingbird-lambda
             - hummingbird-postgres
             - hummingbird-redis
             - hummingbird-websocket
