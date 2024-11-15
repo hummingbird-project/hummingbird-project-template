@@ -23,6 +23,7 @@ jobs:
             - swift-jobs-redis
             - swift-jobs-postgres
             - swift-mustache
+            - swift-websocket
     steps:
     - name: App Token
       uses: tibdex/github-app-token@v2
