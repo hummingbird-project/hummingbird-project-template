@@ -53,6 +53,14 @@ jobs:
       run: |
         cd project-template
         ./update.sh ../${{ matrix.repo }}
+    - name: Set Commit message
+      run: |
+        cd project-template
+        {
+          echo 'GIT_COMMIT_MESSAGE<<EOF'
+          git log -1 --pretty=medium
+          echo EOF
+        } >> "$GITHUB_ENV"
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v6
       with:
@@ -63,5 +71,7 @@ jobs:
         author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
         branch: project-template-update
         title: 'Update from Hummingbird Project Template'
-        body: 'Automated update of files from https://github.com/hummingbird-project/hummingbird-project-template'
+        body: |
+          ${{ env.GIT_COMMIT_MESSAGE }}
+          Automated update of files from https://github.com/hummingbird-project/hummingbird-project-template
         base: main
