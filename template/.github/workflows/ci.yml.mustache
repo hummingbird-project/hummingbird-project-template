@@ -44,7 +44,9 @@ jobs:
       uses: codecov/codecov-action@v4
       with:
         files: info.lcov
+{{=<< >>=}}
         token: ${{ secrets.CODECOV_TOKEN }}
+<<={{ }}=>>
 {{/enable_tests}}
 {{^enable_tests}}
     - name: Build
@@ -94,7 +96,9 @@ jobs:
       uses: codecov/codecov-action@v4
       with:
         files: info.lcov
+{{=<< >>=}}
         token: ${{ secrets.CODECOV_TOKEN }}
+<<={{ }}=>>
 {{/enable_tests}}
 {{^enable_tests}}
     - name: Build
