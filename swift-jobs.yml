@@ -1,2 +1,5 @@
+ci:
+  linux:
+    images: ['swift:6.1', 'swiftlang/swift:nightly-6.2-noble']
 extra-codeowners:
   - thoven87

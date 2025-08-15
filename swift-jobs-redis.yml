@@ -8,5 +8,6 @@ ci:
               ports:
                 - 6379:6379
               options: --entrypoint redis-server
+    images: ['swift:6.1', 'swiftlang/swift:nightly-6.2-noble']
 extra-codeowners:
   - thoven87
