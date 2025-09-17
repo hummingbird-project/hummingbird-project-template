@@ -1,13 +1,13 @@
 ci:
   env:
-    REDIS_HOSTNAME: "redis"
+    VALKEY_HOSTNAME: "valkey"
   linux:
     services: |
-      redis:
-              image: redis
+      valkey:
+              image: valkey/valkey
               ports:
                 - 6379:6379
-              options: --entrypoint redis-server
+              options: --entrypoint valkey-server
     images: ['swift:6.1', 'swift:6.2']
 extra-codeowners:
   - thoven87
