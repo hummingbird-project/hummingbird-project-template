@@ -1,0 +1,11 @@
+ci:
+  env:
+    VALKEY_HOSTNAME: "valkey"
+  linux:
+    services: |
+      valkey:
+              image: valkey/valkey
+              ports:
+                - 6379:6379
+              options: --entrypoint valkey-server
+    images: ['swift:6.1', 'swift:6.2']
