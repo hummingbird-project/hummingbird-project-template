@@ -1,3 +1,0 @@
-ci:
-  linux:
-    images: ['swift:6.0', 'swift:6.1', 'swiftlang/swift:nightly-6.2-noble']

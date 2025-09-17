@@ -18,10 +18,10 @@ jobs:
             - hummingbird-fluent
             - hummingbird-lambda
             - hummingbird-postgres
-            - hummingbird-redis
+            - hummingbird-valkey
             - hummingbird-websocket
             - swift-jobs
-            - swift-jobs-redis
+            - swift-jobs-valkey
             - swift-jobs-postgres
             - swift-mustache
             - swift-websocket
