@@ -1,0 +1,3 @@
+ci:
+  env:
+    HB_ENABLE_ALL_TRAITS: "true"
