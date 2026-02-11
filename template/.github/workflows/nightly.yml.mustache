@@ -36,6 +36,12 @@ jobs:
     services:
       {{{.}}}
 {{/services}}
+{{#count(linux.env)}}
+    env:
+{{#enumerated(linux.env)}}
+      {{{key}}}: {{{value}}}
+{{/enumerated(linux.env)}}
+{{/count(linux.env)}}
     steps:
     - name: Checkout
       uses: actions/checkout@v6
