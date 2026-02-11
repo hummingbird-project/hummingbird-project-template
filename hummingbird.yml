@@ -12,6 +12,13 @@ ci:
   linux:
     # Docker container to use in linux CI
     images: ['swift:6.0', 'swift:6.1', 'swift:6.2']
+    env: 
+      ENABLE_HB_BENCHMARKS: true
+    additional_steps: |
+      - name: Install libjemalloc-dev
+            run: |
+              apt-get -q update
+              apt-get install -y libjemalloc-dev
     # You can also add a services section here to add 
   # Enable Mac CI
   mac: true
