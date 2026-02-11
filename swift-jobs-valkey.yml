@@ -9,5 +9,7 @@ ci:
                 - 6379:6379
               options: --entrypoint valkey-server
     images: ['swift:6.1', 'swift:6.2']
+  mac:
+    enable_tests: false
 extra-codeowners:
   - thoven87
