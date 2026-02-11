@@ -25,11 +25,21 @@ env:
 jobs:
 {{#mac}}
   macOS:
-    runs-on: macos-14
+    runs-on: macos-26
     timeout-minutes: 15
+{{#count(env)}}
+    env:
+{{#enumerated(env)}}
+      {{{key}}}: {{{value}}}
+{{/enumerated(env)}}
+{{/count(env)}}
     steps:
+    - name: Select appropriate Xcode version
+      uses: maxim-lobanov/setup-xcode@v1
+      with:
+        xcode-version: latest-stable
     - name: Checkout
-      uses: actions/checkout@v5
+      uses: actions/checkout@v6
 {{#enable_tests}}
     - name: SPM tests
       run: swift test --enable-code-coverage
@@ -53,6 +63,7 @@ jobs:
       run: |
         swift build
 {{/enable_tests}}
+
 {{/mac}}
 {{#linux}}
   linux:
@@ -75,9 +86,15 @@ jobs:
     services:
       {{{.}}}
 {{/services}}
+{{#count(env)}}
+    env:
+{{#enumerated(env)}}
+      {{{key}}}: {{{value}}}
+{{/enumerated(env)}}
+{{/count(env)}}
     steps:
     - name: Checkout
-      uses: actions/checkout@v5
+      uses: actions/checkout@v6
 {{#additional_steps}}
     {{{.}}}
 {{/additional_steps}}
@@ -119,7 +136,7 @@ jobs:
           branch: swift-${{ matrix.swift-version }}-release
           tag: ${{ matrix.swift-version }}-RELEASE
 <<={{ }}=>>
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 {{#enable_tests}}
       - run: swift test
 {{/enable_tests}}      
