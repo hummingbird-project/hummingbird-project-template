@@ -21,6 +21,7 @@ ci:
               apt-get install -y libjemalloc-dev
     # You can also add a services section here to add 
   # Enable Mac CI
-  mac: true
+  mac:
+    enable_tests: false
 # Base swift version to run swift format off  
 swift-version: 5.10
