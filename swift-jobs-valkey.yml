@@ -8,7 +8,7 @@ ci:
               ports:
                 - 6379:6379
               options: --entrypoint valkey-server
-    images: ['swift:6.1', 'swift:6.2']
+    images: ['swift:6.1', 'swift:6.2', 'swiftlang/swift:nightly-6.3-noble']
   mac:
     enable_tests: false
 extra-codeowners:
