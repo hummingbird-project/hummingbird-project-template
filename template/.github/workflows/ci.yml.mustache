@@ -16,6 +16,9 @@ concurrency:
 <<={{ }}=>>
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 {{#count(env)}}
 env:
 {{#enumerated(env)}}

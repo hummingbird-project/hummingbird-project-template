@@ -8,6 +8,9 @@ on:
 {{/nightly}}
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 {{#count(env)}}
 env:
 {{#enumerated(env)}}
