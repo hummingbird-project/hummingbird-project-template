@@ -42,7 +42,7 @@ jobs:
       with:
         xcode-version: latest-stable
     - name: Checkout
-      uses: actions/checkout@v6
+      uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd #v6.0.2
 {{#enable_tests}}
     - name: SPM tests
       run: swift test --enable-code-coverage
@@ -97,7 +97,7 @@ jobs:
 {{/count(linux.env)}}
     steps:
     - name: Checkout
-      uses: actions/checkout@v6
+      uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd #v6.0.2
 {{#additional_steps}}
     {{{.}}}
 {{/additional_steps}}
@@ -139,7 +139,7 @@ jobs:
           branch: swift-${{ matrix.swift-version }}-release
           tag: ${{ matrix.swift-version }}-RELEASE
 <<={{ }}=>>
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd #v6.0.2
 {{#enable_tests}}
       - run: swift test
 {{/enable_tests}}      
