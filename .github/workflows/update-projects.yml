@@ -10,7 +10,6 @@ permissions:
   id-token: write
   contents: write
   pull-requests: write
-  actions: write
 
 jobs:
   build:
@@ -39,6 +38,9 @@ jobs:
       with:
         client-id: ${{ secrets.HB_APP_ID }}
         private-key: ${{ secrets.HB_APP_PRIVATE_KEY }}
+        repositories: hummingbird-project/hummingbird-project-template,hummingbird-project/${{ matrix.repo }}
+        permission-contents: write
+        permission-pull-requests: write
     - name: Checkout Project Template
       uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd #v6.0.2
       with:
