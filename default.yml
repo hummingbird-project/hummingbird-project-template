@@ -11,9 +11,7 @@ ci:
   # Enable Linux CI
   linux:
     # Docker container to use in linux CI
-    images: ['swift:6.1', 'swift:6.2', 'swift:6.3']
+    images: ['swift:6.1', 'swift:6.2', 'swift:6.3', 'swiftlang/swift:nightly-6.4.x-noble']
     # You can also add a services section here to add 
   # Enable Mac CI
   mac: true
-# Base swift version to run swift format off  
-swift-version: 5.10
