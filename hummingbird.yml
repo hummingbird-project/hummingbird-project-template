@@ -10,8 +10,6 @@ ci:
   enable_tests: true
   # Enable Linux CI
   linux:
-    # Docker container to use in linux CI
-    images: ['swift:6.1', 'swift:6.2', 'swift:6.3']
     env: 
       ENABLE_HB_BENCHMARKS: true
     additional_steps: |
