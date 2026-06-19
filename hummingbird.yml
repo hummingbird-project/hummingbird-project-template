@@ -21,5 +21,3 @@ ci:
   # Enable Mac CI
   mac:
     enable_tests: false
-# Base swift version to run swift format off  
-swift-version: 5.10
