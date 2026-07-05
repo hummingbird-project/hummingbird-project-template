@@ -10,3 +10,5 @@ ci:
               options: --entrypoint valkey-server
   mac:
     enable_tests: false
+security:
+  version: 1.0.0

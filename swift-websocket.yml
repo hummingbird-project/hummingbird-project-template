@@ -18,3 +18,5 @@ ci:
             uses: docker://docker
             with:
               args: docker restart fuzzingserver
+security:
+  version: 1.0.0
