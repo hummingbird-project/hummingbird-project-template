@@ -1,6 +1,7 @@
 #!/bin/bash
 
-# Install mustache with `brew install mint` and `mint install hummingbird-project/swift-mustache-cli`
+# Install mustache with `brew install hummingbird-project/tap/swift-mustache-cli`
+
 
 set -eu
 
@@ -33,12 +34,13 @@ function update_project {
 
     echo "Updating $PROJECT_NAME"
 
-    if [[ -f "$PROJECT_NAME.yml" ]]; then
-        TEMPLATE_CONTEXT="../$PROJECT_NAME.yml"
+    OPTIONAL_TEMPLATE_CONTEXT="$PROJECT_PATH/.hummingbird-project-template.yml"
+    if [[ -f "$OPTIONAL_TEMPLATE_CONTEXT" ]]; then
+        TEMPLATE_CONTEXT="$OPTIONAL_TEMPLATE_CONTEXT"
     else
         TEMPLATE_CONTEXT="../default.yml"
     fi
-    
+
     pushd template > /dev/null
     for f in $(find . -print)
     do
