@@ -1,6 +1,9 @@
-name: Update Hummingbird Packages
+name: Update from project template
 
 on:
+  schedule:
+    - cron: "15 0 * * 0"
+  push:  
   workflow_dispatch:
 
 permissions:
@@ -11,55 +14,35 @@ permissions:
 jobs:
   build:
     runs-on: macOS-latest
-    strategy:
-        matrix:
-          repo:
-            - hummingbird
-            - hummingbird-auth
-            - hummingbird-compression
-            - hummingbird-fluent
-            - hummingbird-lambda
-            - hummingbird-postgres
-            - hummingbird-valkey
-            - hummingbird-websocket
-            - postgres-migrations
-            - swift-jobs
-            - swift-jobs-valkey
-            - swift-jobs-postgres
-            - swift-mustache
-            - swift-websocket
     steps:
     - name: App Token
       uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1  # v3.2.0
       id: generate-token
       with:
+{{=<< >>=}}
         client-id: ${{ secrets.HB_APP_ID }}
         private-key: ${{ secrets.HB_APP_PRIVATE_KEY }}
-        repositories: hummingbird-project/hummingbird-project-template,hummingbird-project/${{ matrix.repo }}
-        permission-contents: write
-        permission-pull-requests: write
-        permission-workflows: write
+        owner: ${{ github.repository_owner }}
+<<={{ }}=>>
     - name: Checkout Project Template
       uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
       with:
+        ref: local-override
         fetch-depth: 1
         path: project-template
+        repository: hummingbird-project/hummingbird-project-template
     - name: Checkout Target Repository
       uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
       with:
-        ref: main
         fetch-depth: 1
-        path: ${{ matrix.repo }}
-        repository: hummingbird-project/${{ matrix.repo }}
+        path: {{project}}
     - name: Install Dependencies
       run: |
-        brew install mint
-        mint install hummingbird-project/swift-mustache-cli
-        echo "$HOME/.mint/bin" >> $GITHUB_PATH
+        brew install hummingbird-project/tap/swift-mustache-cli
     - name: Update Target Repository
       run: |
         cd project-template
-        ./update.sh ../${{ matrix.repo }}
+        ./update.sh ../{{project}}
     - name: Set Commit message
       run: |
         cd project-template
@@ -71,8 +54,9 @@ jobs:
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1  # v8.1.1
       with:
+{{=<< >>=}}
         token: ${{ steps.generate-token.outputs.token }}
-        path: ${{ matrix.repo }}
+        path: <<project>>
         commit-message: 'Update from hummingbird-project-template ${{ github.sha }}'
         committer: GitHub <noreply@github.com>
         author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
@@ -82,3 +66,4 @@ jobs:
           ${{ env.GIT_COMMIT_MESSAGE }}
           Automated update of files from https://github.com/hummingbird-project/hummingbird-project-template
         base: main
+<<={{ }}=>>
