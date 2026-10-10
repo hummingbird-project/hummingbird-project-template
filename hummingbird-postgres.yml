@@ -1,5 +1,0 @@
-ci: false
-extra-codeowners:
-  - thoven87
-security:
-  version: 1.0.0
