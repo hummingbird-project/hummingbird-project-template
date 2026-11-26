@@ -16,4 +16,4 @@ permissions:
 
 jobs:
   api-breakage:
-    uses: hummingbird-project/hummingbird-project-template/.github/workflows/api-breakage.yml@0.0.1
+    uses: hummingbird-project/hummingbird-project-template/.github/workflows/api-breakage.yml@4f3de818e52fd7a2f447b55b62ea0bf5dbec3df9 # v0.0.1
