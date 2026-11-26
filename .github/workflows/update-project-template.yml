@@ -6,6 +6,15 @@ on:
       project-name:
         type: string
         description: "Name of project"
+        required: true
+    secrets:
+      app-client-id:
+        description: 'GitHub App client ID'
+        required: true
+      app-private-key:
+        description: 'GitHub App private key'
+        required: true
+
 
 permissions:
   id-token: write
