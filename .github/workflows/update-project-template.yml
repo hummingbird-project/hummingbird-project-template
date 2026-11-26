@@ -3,9 +3,18 @@ name: Update from project template
 on:
   workflow_call:
     inputs:
-      project_name:
+      project-name:
         type: string
         description: "Name of project"
+        required: true
+    secrets:
+      app-client-id:
+        description: 'GitHub App client ID'
+        required: true
+      app-private-key:
+        description: 'GitHub App private key'
+        required: true
+
 
 permissions:
   id-token: write
@@ -19,8 +28,8 @@ jobs:
       uses: actions/create-github-app-token@f418cff399f7aef4c2f0ad47e25ca7a6abbdd6fc  # v3.4.0
       id: generate-token
       with:
-        client-id: ${{ secrets.HB_APP_ID }}
-        private-key: ${{ secrets.HB_APP_PRIVATE_KEY }}
+        client-id: ${{ secrets.app-client-id }}
+        private-key: ${{ secrets.app-private-key }}
         owner: ${{ github.repository_owner }}
     - name: Checkout Project Template
       uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
@@ -32,14 +41,14 @@ jobs:
       uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
       with:
         fetch-depth: 1
-        path: ${{ inputs.project_name }}
+        path: ${{ inputs.project-name }}
     - name: Install Dependencies
       run: |
         brew install hummingbird-project/tap/swift-mustache-cli
     - name: Update Target Repository
       run: |
         cd project-template
-        ./update.sh ../${{ inputs.project_name }}
+        ./update.sh ../${{ inputs.project-name }}
     - name: Set Commit message
       run: |
         cd project-template
@@ -52,7 +61,7 @@ jobs:
       uses: peter-evans/create-pull-request@3ffccacd46053766916f087ce41d627c0b8cf2d1  # v8.1.3
       with:
         token: ${{ steps.generate-token.outputs.token }}
-        path: ${{ inputs.project_name }}
+        path: ${{ inputs.project-name }}
         commit-message: 'Update from hummingbird-project-template ${{ github.sha }}'
         committer: GitHub <noreply@github.com>
         author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
