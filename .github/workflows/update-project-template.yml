@@ -6,12 +6,6 @@ on:
       project-name:
         type: string
         description: "Name of project"
-      client-id:
-        type: string
-        description: "GitHub App client ID"
-      private-key:
-        type: string
-        description: "GitHub App private key"
 
 permissions:
   id-token: write
@@ -25,8 +19,8 @@ jobs:
       uses: actions/create-github-app-token@f418cff399f7aef4c2f0ad47e25ca7a6abbdd6fc  # v3.4.0
       id: generate-token
       with:
-        client-id: ${{ inputs.client-id }}
-        private-key: ${{ inputs.private-key }}
+        client-id: ${{ secrets.app-client-id }}
+        private-key: ${{ secrets.app-private-key }}
         owner: ${{ github.repository_owner }}
     - name: Checkout Project Template
       uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
