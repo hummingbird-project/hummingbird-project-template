@@ -17,7 +17,6 @@ permissions:
 
 jobs:
   update-project:
-    name: Generate SBOM
     uses: hummingbird-project/hummingbird-project-template/.github/workflows/sbom-generator.yml@0.0.1
     secrets:
       app-client-id: ${{ secrets.HB_APP_ID }}
